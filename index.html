@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raghu Rama Narasimha Relangi — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #111118;
+    --bg3: #18181f;
+    --card: #1c1c26;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.12);
+    --accent: #6c63ff;
+    --accent2: #a78bfa;
+    --accent3: #38bdf8;
+    --gold: #f59e0b;
+    --text: #f1f0f8;
+    --muted: #8b8a9b;
+    --muted2: #5f5e70;
+    --font-head: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── AMBIENT GLOW ── */
+  .glow-orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .glow-orb.one {
+    width: 600px; height: 600px;
+    background: rgba(108,99,255,0.12);
+    top: -200px; left: -200px;
+  }
+  .glow-orb.two {
+    width: 500px; height: 500px;
+    background: rgba(56,189,248,0.08);
+    bottom: 10%; right: -150px;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 4rem;
+    background: rgba(10,10,15,0.75);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--font-head);
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent2); }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 4rem 4rem;
+    overflow: hidden;
+  }
+  .hero-grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 760px;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    background: rgba(108,99,255,0.12);
+    border: 1px solid rgba(108,99,255,0.3);
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--accent2);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .hero-badge::before {
+    content: '';
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent2);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.85); }
+  }
+  .hero h1 {
+    font-family: var(--font-head);
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 .line-accent {
+    background: linear-gradient(90deg, var(--accent2), var(--accent3));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-desc {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 520px;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+    line-height: 1.8;
+  }
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.9rem 2rem;
+    background: var(--accent);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: #7c75ff; transform: translateY(-1px); }
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.9rem 2rem;
+    background: transparent;
+    color: var(--text);
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    border: 1px solid var(--border2);
+    transition: border-color 0.2s, transform 0.15s, background 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--muted2); background: rgba(255,255,255,0.04); transform: translateY(-1px); }
+
+  /* hero floating card */
+  .hero-card {
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 300px;
+    background: var(--card);
+    border: 1px solid var(--border2);
+    border-radius: 20px;
+    padding: 2rem;
+    z-index: 2;
+  }
+  .avatar {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent3));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-head);
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 1rem;
+  }
+  .hero-card h3 {
+    font-family: var(--font-head);
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+  .hero-card p { font-size: 0.8rem; color: var(--muted); margin-bottom: 1rem; }
+  .chip-row { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip {
+    padding: 4px 10px;
+    border-radius: 100px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .chip.js { background: rgba(245,158,11,0.15); color: #f59e0b; }
+  .chip.java { background: rgba(56,189,248,0.12); color: #38bdf8; }
+  .chip.py { background: rgba(108,99,255,0.15); color: var(--accent2); }
+  .chip.html { background: rgba(239,68,68,0.12); color: #f87171; }
+  .chip.css { background: rgba(52,211,153,0.12); color: #34d399; }
+  .chip.c { background: rgba(167,139,250,0.12); color: var(--accent2); }
+
+  .stat-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: var(--font-head);
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--text);
+    display: block;
+  }
+  .stat-lbl { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+
+  /* ── SECTION BASE ── */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 6rem 4rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: var(--font-head);
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+  .section-sub {
+    color: var(--muted);
+    font-size: 1rem;
+    max-width: 520px;
+    font-weight: 300;
+    margin-bottom: 3rem;
+  }
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    margin: 0 auto;
+  }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem;
+  }
+  .skill-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.75rem;
+    transition: border-color 0.2s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .skill-card:hover { border-color: var(--border2); transform: translateY(-3px); }
+  .skill-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    border-radius: 16px 16px 0 0;
+  }
+  .skill-card.lang::before { background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+  .skill-card.web::before { background: linear-gradient(90deg, #f87171, #fb923c); }
+  .skill-card.tools::before { background: linear-gradient(90deg, var(--accent3), #34d399); }
+
+  .skill-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+  .skill-card.lang .skill-icon { background: rgba(108,99,255,0.15); }
+  .skill-card.web .skill-icon { background: rgba(248,113,113,0.12); }
+  .skill-card.tools .skill-icon { background: rgba(56,189,248,0.12); }
+
+  .skill-card h3 {
+    font-family: var(--font-head);
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .skill-card p { font-size: 0.875rem; color: var(--muted); font-weight: 300; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1rem; }
+  .tag {
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    background: rgba(255,255,255,0.06);
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+
+  /* ── EXPERIENCE ── */
+  .exp-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2rem;
+    align-items: start;
+    transition: border-color 0.2s;
+  }
+  .exp-card:hover { border-color: var(--border2); }
+  .exp-icon {
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(108,99,255,0.25), rgba(56,189,248,0.15));
+    border: 1px solid rgba(108,99,255,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+  .exp-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 0.75rem; flex-wrap: wrap; }
+  .exp-badge {
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    background: rgba(56,189,248,0.12);
+    color: var(--accent3);
+    border: 1px solid rgba(56,189,248,0.2);
+  }
+  .exp-date { font-size: 0.8rem; color: var(--muted); }
+  .exp-card h3 {
+    font-family: var(--font-head);
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+  .exp-company { font-size: 0.9rem; color: var(--accent2); font-weight: 500; margin-bottom: 0.75rem; }
+  .exp-desc { font-size: 0.9rem; color: var(--muted); font-weight: 300; line-height: 1.7; }
+
+  /* ── EDUCATION ── */
+  .edu-list { display: flex; flex-direction: column; gap: 1.5rem; }
+  .edu-item {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    padding: 1.75rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .edu-item:hover { border-color: var(--border2); transform: translateX(4px); }
+  .edu-year {
+    font-family: var(--font-head);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--accent2);
+    letter-spacing: 0.05em;
+    min-width: 80px;
+    padding-top: 4px;
+  }
+  .edu-item h3 {
+    font-family: var(--font-head);
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+  .edu-item p { font-size: 0.875rem; color: var(--muted); font-weight: 300; }
+  .edu-grade {
+    display: inline-block;
+    margin-top: 0.5rem;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    background: rgba(245,158,11,0.12);
+    color: var(--gold);
+    border: 1px solid rgba(245,158,11,0.2);
+  }
+
+  /* ── CONTACT ── */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+  .contact-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.75rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    color: var(--text);
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .contact-item:hover { border-color: rgba(108,99,255,0.4); transform: translateY(-2px); }
+  .contact-ico {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: rgba(108,99,255,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+  .contact-item h4 { font-family: var(--font-head); font-size: 0.875rem; font-weight: 700; margin-bottom: 2px; }
+  .contact-item p { font-size: 0.8rem; color: var(--muted); font-weight: 300; }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 3rem 2rem;
+    border-top: 1px solid var(--border);
+    color: var(--muted2);
+    font-size: 0.85rem;
+  }
+  footer span { color: var(--accent2); }
+
+  /* ── ANIMATIONS ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 2rem; }
+    .hero { padding: 7rem 2rem 4rem; }
+    .hero-card { display: none; }
+    section { padding: 4rem 2rem; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .nav-links { gap: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="glow-orb one"></div>
+<div class="glow-orb two"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">R<span>.</span>Raghu</a>
+  <div class="nav-links">
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#education">Education</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Available for opportunities</div>
+    <h1>
+      Hi, I'm<br>
+      <span class="line-accent">Raghu Rama</span><br>
+      Narasimha Relangi
+    </h1>
+    <p class="hero-desc">
+      Aspiring Software Engineer with a passion for building things on the web.
+      Diploma in Computer Software Engineering · Currently interning at Anurag IT Solutions.
+    </p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn-primary">Get in Touch →</a>
+      <a href="#skills" class="btn-secondary">View Skills</a>
+    </div>
+  </div>
+
+  <!-- Floating Card -->
+  <div class="hero-card">
+    <div class="avatar">RR</div>
+    <h3>Raghu Relangi</h3>
+    <p>📍 Gokavaram, Andhra Pradesh</p>
+    <div class="chip-row">
+      <span class="chip js">JavaScript</span>
+      <span class="chip java">Java</span>
+      <span class="chip py">Python</span>
+      <span class="chip html">HTML</span>
+      <span class="chip css">CSS</span>
+      <span class="chip c">C</span>
+    </div>
+    <div class="stat-row">
+      <div class="stat">
+        <span class="stat-num">94.5%</span>
+        <span class="stat-lbl">Diploma Score</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">6+</span>
+        <span class="stat-lbl">Languages</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="fade-up">
+    <p class="section-label">What I know</p>
+    <h2 class="section-title">Skills & Technologies</h2>
+    <p class="section-sub">A growing toolkit built through self-study and hands-on practice.</p>
+  </div>
+  <div class="skills-grid fade-up">
+    <div class="skill-card lang">
+      <div class="skill-icon">⚡</div>
+      <h3>Programming Languages</h3>
+      <p>Core programming fundamentals and logic building across multiple paradigms.</p>
+      <div class="skill-tags">
+        <span class="tag">C</span>
+        <span class="tag">Java</span>
+        <span class="tag">Python</span>
+        <span class="tag">JavaScript</span>
+      </div>
+    </div>
+    <div class="skill-card web">
+      <div class="skill-icon">🌐</div>
+      <h3>Web Technologies</h3>
+      <p>Building user interfaces and interactive web pages from scratch.</p>
+      <div class="skill-tags">
+        <span class="tag">HTML</span>
+        <span class="tag">CSS</span>
+        <span class="tag">JavaScript</span>
+      </div>
+    </div>
+    <div class="skill-card tools">
+      <div class="skill-icon">🛠️</div>
+      <h3>Soft Skills & Extras</h3>
+      <p>Strong communication skills with certified data entry proficiency.</p>
+      <div class="skill-tags">
+        <span class="tag">Communication</span>
+        <span class="tag">Data Entry</span>
+        <span class="tag">Problem Solving</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="fade-up">
+    <p class="section-label">Work History</p>
+    <h2 class="section-title">Experience</h2>
+    <p class="section-sub">Gaining real-world exposure through hands-on internship training.</p>
+  </div>
+  <div class="exp-card fade-up">
+    <div class="exp-icon">💼</div>
+    <div>
+      <div class="exp-meta">
+        <span class="exp-badge">On-Site · Internship</span>
+        <span class="exp-date">November 2025 – Present</span>
+      </div>
+      <h3>Software Engineering Intern</h3>
+      <div class="exp-company">Anurag IT Solutions Pvt. Ltd · Rajamahendravaram</div>
+      <p class="exp-desc">
+        Working on-site as a trainee software engineer, gaining practical experience in software development workflows,
+        collaborating with the team, and applying core programming knowledge in a professional environment.
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="fade-up">
+    <p class="section-label">Academic Background</p>
+    <h2 class="section-title">Education</h2>
+    <p class="section-sub">Building a strong foundation in computer science and engineering.</p>
+  </div>
+  <div class="edu-list fade-up">
+    <div class="edu-item">
+      <div class="edu-year">2023 – 2026</div>
+      <div>
+        <h3>Diploma in Computer Software Engineering</h3>
+        <p>Aditya Polytechnic Colleges, Andhra Pradesh</p>
+        <span class="edu-grade">⭐ 94.5% Score</span>
+      </div>
+    </div>
+    <div class="edu-item">
+      <div class="edu-year">2022 – 2023</div>
+      <div>
+        <h3>High School Certificate (SSC)</h3>
+        <p>Board of Secondary Education, Andhra Pradesh (BSEAP)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CERTIFICATIONS -->
+<section>
+  <div class="fade-up">
+    <p class="section-label">Achievements</p>
+    <h2 class="section-title">Certifications</h2>
+  </div>
+  <div class="edu-list fade-up">
+    <div class="edu-item" style="background: linear-gradient(135deg, rgba(245,158,11,0.06), rgba(108,99,255,0.06)); border-color: rgba(245,158,11,0.18);">
+      <div style="font-size: 2rem; line-height: 1; min-width: 40px; text-align: center;">🏅</div>
+      <div>
+        <h3>Certified Data Entry Operator</h3>
+        <p>Recognized for proficiency in data entry operations and accuracy.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="fade-up">
+    <p class="section-label">Let's Connect</p>
+    <h2 class="section-title">Get in Touch</h2>
+    <p class="section-sub">Open to internships, collaborations, and new opportunities.</p>
+  </div>
+  <div class="contact-grid fade-up">
+    <a href="tel:+916309740934" class="contact-item">
+      <div class="contact-ico">📱</div>
+      <div>
+        <h4>Phone</h4>
+        <p>+91 6309740934</p>
+      </div>
+    </a>
+    <a href="https://www.linkedin.com/in/raghu-ramanarasimha-relangi-b81b35392" target="_blank" class="contact-item">
+      <div class="contact-ico">💼</div>
+      <div>
+        <h4>LinkedIn</h4>
+        <p>raghu-ramanarasimha-relangi</p>
+      </div>
+    </a>
+    <div class="contact-item" style="cursor:default;">
+      <div class="contact-ico">📍</div>
+      <div>
+        <h4>Location</h4>
+        <p>Gokavaram, E. St. Godavari, Andhra Pradesh</p>
+      </div>
+    </div>
+    <div class="contact-item" style="cursor:default;">
+      <div class="contact-ico">🏢</div>
+      <div>
+        <h4>Currently At</h4>
+        <p>Anurag IT Solutions, Rajamahendravaram</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  Designed & built with ❤️ &nbsp;|&nbsp; <span>Raghu Rama Narasimha Relangi</span> &nbsp;·&nbsp; 2025
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 120);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
